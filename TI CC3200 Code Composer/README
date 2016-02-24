@@ -1,0 +1,10 @@
+The files contained in this folder are related to my EEC 172 Embedded Systems lab.
+The projects are compiled using the code composer application.
+It requires a cc3200 launchpad, as well as an Arduino OLED and RF receiver to be attached. Signals from a generic Comcast Xfinity remote programmed to settings 1028 is used for all texting.
+
+Made in collaboration with Mazar Farran
+
+It includes input acknowledgement (1)
+The ability to type on an OLED (2)
+The ability to text from a remote to an attached board (3)
+Texting between boards over AWS IOT (4)

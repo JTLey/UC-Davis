@@ -1,0 +1,193 @@
+README
+FOR JACOB LEY JTLEY@UCDAVIS.EDU ECS 175 PROJECT 1
+
+IMPORTANT NOTES
+~~~~~~~~~~~~~
+	This program is capable of rasterizing convex and concave polygons.
+		BUT NOT COMPLEX POLYGONS! (Such as an hourglass shape)
+	It is possible to view the polygons as white on black, or color on black.
+		(See Color under the INPUT TYPES section)
+	All inputs are given in the command line.
+	The first input is height and width. See Display Window for details.
+	After those two inputs, you will be repeatedly queued for input with a >>
+		See the INPUT TYPES section for examples of all inputs.
+	It is not possible to delete a polygon or line.
+	You can however add more after the file is loaded, but no more than 3 each
+		See INPUT TYPES for instructions.
+	Type Ctrl+C to quit the program.
+	The provided HelloGraphics.cpp was used as the skeleton. 
+		The rest of the code is my own.
+	If the clipping window produces a complex polyon (either splits it or lines
+		 intersect) then the rasterization will likely fail.
+
+LOCATION OF ALGORITHMS
+~~~~~~~~~~~~~~
+	Bresenham Line Drawing:
+		Line.cpp:
+			97-194
+		Poly.cpp:
+			371-494
+	DDA:
+		Line.cpp:
+			57-96
+	Rasterization (Scan-Line):
+		Main.cpp:
+			454-592
+	Translation:
+		Poly.cpp:
+			290-295
+	Rotation:
+		Poly.cpp:
+			297-313
+	Scaling:
+		Poly.cpp:
+			315-331
+	Clipping:
+		Poly.cpp
+			333-338 
+			35-207	(4 iterations, editing the displayed vertices for each side)
+		Line.cpp
+			57-194 (The clipping window is a limit in the loops)
+
+
+FILE/PROGRAM NOTES
+~~~~~~~~~~~~~~~~
+Running The Program, ShapeCoordinates.txt, Display Window
+
+Running The Program:
+	Compile the program with the "make" command (described in the attached makefile)
+	Please have all turned in files in order to compile correctly.
+
+	The executable file is "main"
+	To run the file, type "main" plus the name of the file with the pre-loaded shapes
+		 and coordinates
+	For example, to run the provided file, type "main ShapeCoordinates.txt"
+
+ShapeCoordinates.txt:
+	This is the file containing all the pre-loaded coordinates.
+	It DOES NOT need to be named ShapeCoordinates.txt, just make sure that whatever it 			is named, the proper argument is given to main (see Running the Program)
+	Provided is the sample file with added // comments to explain each line.
+	Note that the // comments are not present in the actual file.
+
+	2    // This is the number of polygons to be drawn, can vary from 0-3
+	4	// This is the number vertices in the first polygon, can vary from 3-20
+	(68,-7)   //This is the first vertex of the first polygon.
+	(117,68)	//This is the second vertex. ORDER MATTERS.
+	(41,117)	//Changing the order of vertices could change the actual shape drawn
+	(-7,41)
+	6	  // This is the number of vertices in the second polygon
+	(150,150)	// Note that these numbers and coordinates are not present if
+	(125,40)		//unessesary
+	(200,100)
+	(190,250)
+	(5,205)
+	(45,175)
+	2	// This is the number of Lines to be drawn, can vary from 0-3
+	1	// This will either be 1 or 0. A 1 means DDA will be used to draw the line.
+	(15,150)    // A 0 means that Bresenham will be used to draw the line
+	(250,25)	//Again these are the two coordinates of the line.
+	0	//This line will use Bresenham.
+	(60,75)
+	(190,187)
+
+	Note the format of the coordinates "(x,y)" and the lack of spaces between lines.
+	Improper input could potentially crash the program, or cause errors.
+
+Display Window:
+	The window will automatically open when the program runs, after the used inputs the
+		desired width and height.
+	WIDTH AND HEIGHT MUST BE POSITIVE VALUES.
+	The coordinates of the window are from 0 -> width, and 0 -> height.
+	That means that despite negative numbers being valid inputs for coordinates
+		NEGATIVE VERTEXES WILL NEVER SHOW UP.
+	The program treats the window as a clipping function, and clips around it.
+	Furthermore the window itself is for displaying the output, not for taking input.
+	DO NOT TRY TO RESIZE THE WINDOW OR MOVE IT.
+	Doing so could cause errors.
+
+INPUT TYPES
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Polygon, DDA, Bresenham, Translate, Rotate, ScaleX, ScaleY, Clip, Color, Save
+
+Polygon:
+	The polygons described in the ShapesCoordinates.txt will automatically be rendered.
+	However it is possible to add new polygons (up to 3 total) to the window.
+	Each Polygon has an internal value (1, 2, or 3) that cannot be changed.
+	The first polygon is assigned value 1, the second 2, and the third 3.
+	ADDING POLYGONS AFTER 3 WILL RESULT IN THE 3RD BEING REPLACED.
+	
+	To draw a new polygon, use the format similar to the ShapesCoordinates.txt
+	For example to draw the first polygon described, type (example in quotes):
+	>> "Polygon 4 (68,-7) (117,68) (41,117) (-7,41)"
+	The 4 indicates that there are 4 edges.
+	IMPROPER INPUT COULD CRASH THE PROGRAM
+	Polygons use Bresenham 
+
+DDA/Bresenham:
+	Similar to polygons, up to 3 lines can be drawn.
+	They are also internally lables 1-3.
+	To draw a line type the algorithm you want to use, and the two vertices.
+	Example:
+	>> "Bresenham (34,87) (250, 185)"
+	Similarly, if you want it rendered using DDA, replace Bresenham with DDA.
+
+Translate:
+	Translate is only used on polygons.
+	You must specify which shape you want to translate, and by how much.
+	Example:
+	>> "Translate 2 (30,-5)"
+	This would move polygon 2 (internal label) to the right 30 pixels, and down 5.
+	Inputs can be negative, but CANNOT BE FLOATS.
+
+Rotate:
+	Rotate is only used on polygons.
+	It rotates the shape about its centroid (The average value of all vertices).
+	THE INPUT IS IN RADIANS AND CAN BE A FLOAT.
+	You must specify which polygon to rotate, and by how much.
+	Example:
+	>> "Rotate 1 -1.57"
+	This would rotate polygon 1 by -1.57 radians, or ~-90 degrees. (Clockwise)
+
+ScaleX/ScaleY:
+	Scale is only used on polygons.
+	As the name suggests, ScaleX only changes the X values of a polygon.
+	ScaleY only changes the Y values.
+	You must specify which polygon to scale, and by how much.
+	INPUTS MUST BE NON-ZERO, BUT MAY BE NEGATIVE AND FLOATS
+	Example:
+	>> "ScaleX 2 -1.5"
+	This would flip polygon 2 over a vertical line through its centroid, and expand it 
+		by a factor of 1.5
+
+Clip:
+	Clip is used on both Lines and Polygons.
+	In order to access a line, add 3 to its internal number.
+	You must specify the shape to be clipped, and the clipping window.
+	INPUT MUST BE INTEGERS.
+	Inputting values outside of the scope to the window will not have a visible effect.
+	CLIPPING DOES NOT CHANGE THE ACTUAL VERTICES OF THE POLYGON.
+	That means you can make a small clipping window, then make a large one, and the
+		original shape should be seen.
+	THE INPUT ORDER IS XMIN, XMAX, YMIN, YMAX
+	Example:
+	>> "Clip 5 50 250 75 130"
+	This will clip line 2 (2+3=5) with a xmin=50, xmax=250, ymin=75, ymax=130.
+	
+Color:
+	This program supports coloring the individual polygons.
+	It will not color lines.
+	The first polygon will be red, the second green, the third blue.
+	By default this is off (all white), but can be toggled.
+	Example:
+	>> "Color ON"
+	Note that ON is all caps. Type OFF to toggle color off (actually any input but ON
+		 will toggle it off.
+
+Save:
+	This command is the easiest, simply type:
+	>> "Save"
+	This will save all the current polygons and lines to ShapeCoordinates.txt
+	THIS OVERWRITES THE OLD SHAPECOORDINATES.TXT
+	IT DOES NOT SAVE COLOR TOGGLE, OR CLIPPING WINDOWS
+	Note that because of internal algorithms, simply loading the file then saving
+		may result in the vertices changing order. This is fine, the shapes will 			still be the same.

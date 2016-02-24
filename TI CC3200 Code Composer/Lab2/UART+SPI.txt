@@ -1,0 +1,7 @@
+Note on Saleae for part 2:
+
+The signal being sent over is for the board to print "1234"
+
+The UART signals correspond to the ascii hex values of 1, 2, 3, 4
+
+The SPI signals then start up and represent the write commands/data, which is not immediately discernable as 1234

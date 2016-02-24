@@ -1,0 +1,179 @@
+README
+FOR JACOB LEY 998251725
+ECS 175 PROJECT 2
+jtley@ucdavis.edu
+
+NOTES
+~~~~
+There is a 5 shape maximum, it is reccomended to render at least 1 shape
+The is a provided default file
+All functions (translation, rotation, scaling) are animated
+All input is with ARROW KEYS and MENUS, not the command line. (With exception to New File Command)
+The drawing is done using glVertex commands
+The Menu responds to right mouse button
+
+RUNNING THE PROGRAM
+~~~~~~~~~~~~~~~~~~
+Run the program by compiling via the makefile command.
+Run the main program that is produced by that by simply typing "main"
+All input is with ARROW KEYS and MENUS, not the command line. (With exception to New File Command)
+
+QUITTING THE PROGRAM
+~~~~~~~~~~~~~~~~~~~
+To quit the progam and save all data
+select the "Exit" option in the pop-up menu
+That Saves the data to the selected text file
+
+THE TEXT FILE
+~~~~~~~~~~~~~~~~~~~~
+OPENING:
+By default the program opens "3dcoordinates.txt"
+but if a different text file is desired
+select the New File option in the menu. Then type the name of the Text file in the command line
+
+FORMAT:
+The basic format of the text file is take the number of shapes,
+then for each shape take the number of vertices
+    then each vertex coordinate (Floats or Ints are OK)
+    then for each shape take the number of lines
+        then each line (from coordinate "x" to coordinate "y")
+	Then the last two lines are the initial coordinates for the rotation vector
+
+This is the default text file, with a walkthrough (// comments are not actually in file)
+
+3 //Three Shapes
+4  // First Shape has 4 vertices (Makes a pyramid)
+0.838708 1.3285 1.74154  // 1st Coordinate
+0.133999 2.72281 0.996926   // 2nd Coordinate...
+1.49754 0.899074 0.536746
+0.0716074 0.394437 1.47453
+6   // 6 lines
+1 2 //1st line is between coordinate 1 and 2 (HAS TO BE INT)
+1 3
+1 4
+2 3
+2 4
+3 4
+8 //Second Shape has 8 vertices (Makes a cube)
+-0.178944 0.236207 1.21438
+-0.675931 1.11697 0.598389
+-0.199007 0.836391 -0.205217
+0.297966 -0.0443899 0.410765
+-0.699991 -0.457035 1
+-1.19698 0.423761 0.384015
+-0.720068 0.143172 -0.41959
+-0.223083 -0.737632 0.196385
+12 //Second Shape has 12 lines
+1 2
+2 3
+3 4
+4 1
+5 6
+6 7
+7 8
+8 5
+1 5
+2 6
+3 7
+4 8
+8  //Third Shape has 8 lines
+0.869246 -0.124707 -0.686455 //Coordinates
+1.79778 -0.727849 -1.36106
+1.92808 0.372316 -1.13056
+0.999543 0.975455 -0.455971
+0.951914 -0.42663 0.0942663
+1.88045 -1.02978 -0.580335
+2.01075 0.0703814 -0.349852
+1.08221 0.673542 0.324755
+8 // 8 Vertices
+1 6
+6 3
+3 8
+8 1
+2 7
+7 4
+4 5
+5 2
+0 0 1 //First Coordinate of Rotation vector
+1 1 0 //Second Coordinate
+
+DISPLAY
+~~~~~~
+The Bottom Left screen is the XY Plane
+The Top Left screen is the XZ Plane
+The Top Right screen is the YZ Plane
+The Bottom Right screen is used for the menu.
+The subwindows are boxed to help display the regions
+Each Shape has a slightly different color to help differentiate the shapes
+The Rotation Vertex is also visible, with the vertex going from the blue side to the red (Direction matters)
+There is one MasterMax and one MasterMin value that serve as the clipping windows for each window.
+Vertices are not specifically drawn, just the lines
+    (So if there is a vertex that has no lines, it will not draw, but will affect Master values)
+
+POPUP MENU
+~~~~~~~~
+Right Click the bottom right hand part of the screen to have the menu popup.
+The options are to rotate, translate, scale, rotation vector, new file, exit, or print vertices
+The submenus pick which shape that function is being applied to
+
+ROTATION
+~~~~~~~~
+Select Rotate from the menu and which shape to rotate in the submenu
+Pressing the UP KEY will rotate the shape is the positive direction (right hand rule) around the rotation vector.
+Pressing the DOWN KEY will rotate the shape in the negative direction
+The shape rotates only a few degrees at a time, so hold down the button until it is in the desired position
+The rotation vector goes from the blue side to the red side
+algorithim in Shape.cpp at 44-78
+
+TRANSLATE
+~~~~~~~~
+Select Translate from the menu and which shape to translate
+ALL TRANSLATIONS ARE DONE WITH ARROW KEYS! PAY ATTENTION:
+The DOWN KEY moves the shape in the X direction
+The RIGHT KEY moves the shape in the Y direction
+The UP KEY moves the shape in the Z direction
+The LEFT KEY changes the direction the shape moves
+
+PRESS THEN RELEASE THE LEFT KEY BEFORE PRESSING THE OTHER KEYS AGAIN
+
+So for example, holding down the down key will translate the shape in the +x direction
+Pressing the left key then holding the down key will translate the shape in the -x direction
+Both the right key and the up key will also translate the shape in the -y and -z respectively.
+Pressing the left key again resets the directions to +x, +y, +z
+
+IF AT ANY TIME THE LEFT KEY IS PRESSED, THE DIRECTIONS WILL REVERSE
+Even if you are currently in the Scale menu, the left key negates directions in translate
+algorithm in Shape.cpp at 79-84
+
+SCALE
+~~~~
+Select the Scale from the menu and the shape to scale
+Pressing the UP BUTTON increases the size of the shape
+Pressing the DOWN BUTTON decreases the size of the shape
+Shapes are scaled about the centroid of the shape
+algorithm in Shape.cpp at 87-97
+
+ROTATION VECTOR
+~~~~~~~~~~~~~~
+There are two options to choose in the menu, and they correspond to the two points of the vector
+The first point is the blue side, second point is the red side
+SEE TRANSLATION RULES FOR HOW TO MOVE THE ROTATION VECTORS (The rules are the same)
+This is the default option when the program starts
+
+NEW FILE
+~~~~~~~
+Selecting the new file command will prompt the user to input the name of the file containing the coordinates
+This is the only time the command line will be used
+if this option is taken on accident, enter 3dcoordinates.txt (The default file)
+The command will then revert to whatever was last selected (rotate, translate, .e.g)
+
+PRINT VERTICES
+~~~~~~~~~~~~
+If you want to see the vertices for a specific shape, or the rotation vector
+select this option then specify the shape to have the values printed in the command line
+
+EXIT
+~~~
+THIS QUITS THE PROGRAM
+Choose this option in the popup window
+The program will save all shapes and the rotation vector in the selected file

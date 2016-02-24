@@ -1,0 +1,8 @@
+These files contain the digital design projects from my senior design course EEC 181A/B. We used a DE1-SOC board in collaboration with Quartus, Qsys, and AMP programs. The purpose was to develop functional verilog code that could accelerate processor functionality.
+
+Made in collaboration with Kevin Dinh
+
+These file include basic board functionality (1)
+Entirely verilog state machines and functionality (2)
+HPS/FPGA sorting in SDRAM (3)
+Digital accelerator to produce image edges (4)
